@@ -77,19 +77,19 @@ A sample demo of the application with a mailbox analysis *may be* available [her
 
 * Download and install [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html)  
 * Download and install [curl](https://curl.haxx.se/windows/)
-* Download and install [jq](https://github.com/stedolan/jq/releases/download/jq-1.5/jq-win64.exe)
+* Download [jq](https://github.com/stedolan/jq/releases/download/jq-1.5/jq-win64.exe), rename it to **jq** and copy it in your %PATH%.
 
 ![](res/mac.png)
 
 * Download and install [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html)  
 * **curl** should already be installed. If not, get it from [here](https://curl.haxx.se/dlwiz/?type=bin&os=Mac+OS+X&flav=-&ver=-&cpu=i386)
-* Download and install [jq](https://github.com/stedolan/jq/releases/download/jq-1.5/jq-osx-amd64)
+* Download [jq](https://github.com/stedolan/jq/releases/download/jq-1.5/jq-osx-amd64), rename it to **jq** and copy it in your $PATH.
 
 ![](res/tux.png)
 
 * Download and install [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html)  
 * Get **curl** from your distribution repository or download and install it from [here](https://curl.haxx.se/dlwiz/?type=bin&os=Linux).
-* Get **jq** from your distribution repository or download and install it from [here](https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64).
+* Get **jq** from your distribution repository or download it from [here](https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64), rename it to **jq** and copy it in your $PATH.
 
 <br>
 
@@ -110,118 +110,6 @@ Check curl command is available:
 Check jq command is available:
 
 	jq
-
-<br>
-
-#### Check your IBM Cloud account
-
-Before being able to work with IBM Cloud you should be aware of **2** things:
-  * the name of your **organization**, which is the same among all Regions (Germany, Sydney, United Kingdom, US South and US East).
-  * the name of one **space** - which is assigned to one Region only - in one Region (Germany, Sydney, United Kingdom, US South and US East) in your organization.
-
-> At least one organization has been created automatically, and one space called **dev** is created for you.
-If not sure about organization name and if a space is available then log in [IBM Cloud console](https://console.bluemix.net/account/manage-orgs), click 'Cloud Foundry Orgs' then view details, check that 'Cloud Foundry Spaces in Region' is not empty and if so then Add a Cloud Foundry Space.
-
-:checkered_flag: Now you should know both your organization and your space in one Region and your are ready to setup your environment in IBM Cloud.
-
-<br>
-
-#### Add some environment variables and aliases
-
-:warning: **ORG**, **USERID** and **SPACE** have to be substituted with your own environment variables
-
-![](res/win.png) ![](res/cmd.png) 
-
-Set your IBM Cloud Organization
-
-	set "ORG=teatcher0@bpshparis.com"
-
-Set your IBM Cloud userid
-	
-	set "USERID=teatcher0@bpshparis.com"
-
-Set your IBM Cloud space
-
-	set "SPACE=dev"	
-	
-Set usefull region and api endpoint
-
-```
-set "US_ENDPOINT=https://api.ng.bluemix.net"
-set "GB_ENDPOINT=https://api.eu-gb.bluemix.net"
-set "DE_ENDPOINT=https://api.eu-de.bluemix.net"
-set "US_REGION=us-south"
-set "GB_REGION=eu-gb"
-set "DE_REGION=eu-de"
-```
-
-Add some aliases
-
-```
-set "iclus=C:\Progra~1\IBM\Cloud\bin\ibmcloud login -a %US_ENDPOINT% -u %USERID% --skip-ssl-validation -s %SPACE% -o %ORG%"
-set "iclgb=C:\Progra~1\IBM\Cloud\bin\ibmcloud login -a %GB_ENDPOINT% -u %USERID% --skip-ssl-validation -s %SPACE% -o %ORG%" 
-set "iclde=C:\Progra~1\IBM\Cloud\bin\ibmcloud login -a %DE_ENDPOINT% -u %USERID% --skip-ssl-validation -s %SPACE% -o %ORG%"
-set "iclsso=C:\Progra~1\IBM\Cloud\bin\ibmcloud login -u %USERID% --sso" 
-set "icl=C:\Progra~1\IBM\Cloud\bin\ibmcloud login -u %USERID% --skip-ssl-validation" 
-set "ic=C:\Progra~1\IBM\Cloud\bin\ibmcloud"
-set "iclo=C:\Progra~1\IBM\Cloud\bin\ibmcloud logout"
-```
-
-:bulb: To display what's hiding behind aliases use **echo**
-
-	echo %iclde%
-	
-will display
-
-	C:\Progra~1\IBM\Cloud\bin\ibmcloud login -a https://api.eu-de.bluemix.net -u teatcher0@bpshparis.com --skip-ssl-validation -s dev -o teatcher0@bpshparis.com			
-
-
-![](res/mac.png) ![](res/tux.png) ![](res/term.png) 
-
-Set your IBM Cloud Organization
-
-	export ORG=teatcher0@bpshparis.com
-
-Set your IBM Cloud userid
-	
-	export USERID=teatcher0@bpshparis.com
-
-Set your IBM Cloud space
-	
-	export SPACE=dev
-	
-Set usefull region and api endpoint
-	
-```
-export US_ENDPOINT=https://api.ng.bluemix.net
-export GB_ENDPOINT=https://api.eu-gb.bluemix.net
-export DE_ENDPOINT=https://api.eu-de.bluemix.net
-export US_REGION=us-south
-export GB_REGION=eu-gb
-export DE_REGION=eu-de
-```
-
-
-Add some aliases
-
-```
-alias iclus='/usr/local/bin/ibmcloud login -a ${US_ENDPOINT} -u ${USERID} --skip-ssl-validation -s ${SPACE} -o ${ORG}' 
-alias iclgb='/usr/local/bin/ibmcloud login -a ${GB_ENDPOINT} -u ${USERID} --skip-ssl-validation -s ${SPACE} -o ${ORG}' 
-alias iclde='/usr/local/bin/ibmcloud login -a ${DE_ENDPOINT} -u ${USERID} --skip-ssl-validation -s ${SPACE} -o ${ORG}' 
-alias iclsso='/usr/local/bin/ibmcloud login -u ${USERID} --sso' 
-alias icl='/usr/local/bin/ibmcloud login -u ${USERID} --skip-ssl-validation' 
-alias ic='/usr/local/bin/ibmcloud'
-alias iclo='/usr/local/bin/ibmcloud logout'
-alias l='ls -Alhtr' 
-```
-
-:bulb: To display what's hiding behind aliases use **command -v**
-
-	command -v iclde
-	
-will display
-
-	alias iclde='/usr/local/bin/ibmcloud login -a https://api.eu-de.bluemix.net -u teatcher0@bpshparis.com --skip-ssl-validation -s dev -o teatcher0@bpshparis.com'			
 
 <br>
 
@@ -290,8 +178,73 @@ Let's connect to :de:
 
 <br>
 
+### Setup environment with IBM Cloud Graphical User Interface
 
-### Setup environment
+Ctrl + Click on [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai)
+
+To instanciate **Tone Analyzer** service click
+
+![](guiScreenShots/ta0.jpg)
+
+:zzz: Wait for followings panels to be available:
+
+![](guiScreenShots/ta1.jpg)
+
+![](guiScreenShots/ta2.jpg)
+
+Then hit 
+
+![](guiScreenShots/ta3.jpg)
+
+:zzz: When you land on,
+
+![](guiScreenShots/ta4.jpg)
+
+:thumbsup: this mean that the **Tone Analyzer** service as been successfully instantiate.
+
+To instanciate **Natural Language Understanding** service, go back to [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai) and click
+
+![](guiScreenShots/nlu0.jpg)
+
+:zzz: Wait for followings panels to be available:
+
+![](guiScreenShots/nlu1.jpg)
+
+![](guiScreenShots/nlu2.jpg)
+
+Then hit 
+
+![](guiScreenShots/nlu3.jpg)
+
+:zzz: When you land on,
+
+![](guiScreenShots/ta4.jpg)
+
+:thumbsup: this mean that the **Natural Language Understanding** service as been successfully instantiate.
+
+To instanciate **Visual Recognition** service, go back to [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai) and click
+
+![](guiScreenShots/wvc0.jpg)
+
+:zzz: Wait for followings panels to be available:
+
+![](guiScreenShots/wvc1.jpg)
+
+![](guiScreenShots/wvc2.jpg)
+
+Then hit 
+
+![](guiScreenShots/wvc3.jpg)
+
+:zzz: When you land on,
+
+![](guiScreenShots/wvc4.jpg)
+
+:thumbsup: this mean that the **Visual Recognition** service as been successfully instantiate.
+
+
+
+### Setup environment with command line
 
 #### Dump marketplace to get service name, plan and description
 
