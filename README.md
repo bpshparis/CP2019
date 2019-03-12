@@ -395,11 +395,11 @@ You can check it in your [IBM Cloud Dashboard](https://console.bluemix.net/dashb
 
 #### Check environment is setup correctly
 
-> :thumbsup: You are done with environment setup. Now at least four Watson services should be created (**ta0, nlu0, dsc0 and wvc0**) in your space.
+> :checkered_flag: You are done with environment setup. Now at least four Watson services should be created (**ta, nlu, and wvc**) in your space.
 
 >Check it with
 
-	ibmcloud service list
+	ibmcloud resource service-instances
 
 <br>
 	
