@@ -261,7 +261,7 @@ Then hit
 
 :thumbsup: this mean that the **Visual Recognition** service as been successfully instantiate.
 
-> :thumbsup: You are done with environment setup. Now at least three Watson services should be created.
+> :checkered_flag: You are done with environment setup. Now at least three Watson services should be created.
 You can check it in your [IBM Cloud Dashboard](https://console.bluemix.net/dashboard/apps).
 
 ### Setup environment with command line
