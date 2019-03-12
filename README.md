@@ -887,7 +887,7 @@ Do the same for application. Open application **More Actions** popup menu and ch
 
 #### Run application elsewhere from IBM Cloud
 
-##### Using Resource Group
+##### Using Resource Group (Manual-generated service credentials)
 
 ```
 #!/bin/sh
