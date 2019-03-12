@@ -181,13 +181,15 @@ Let's connect to :de:
 
 ### Setup environment with IBM Cloud Graphical User Interface
 
+![](res/web.png)
+
 Ctrl + Click on [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai)
 
 To instanciate **Tone Analyzer** service click
 
 ![](guiScreenShots/ta0.jpg)
 
-:zzz: Wait for followings panels to be available:
+Wait for followings panels to be available:
 
 ![](guiScreenShots/ta1.jpg)
 
@@ -225,7 +227,7 @@ To instanciate **Natural Language Understanding** service, go back to [IBM Cloud
 
 ![](guiScreenShots/nlu0.jpg)
 
-:zzz: Wait for followings panels to be available:
+Wait for followings panels to be available:
 
 ![](guiScreenShots/nlu1.jpg)
 
@@ -245,7 +247,7 @@ To instanciate **Visual Recognition** service, go back to [IBM Cloud Catalog](ht
 
 ![](guiScreenShots/wvc0.jpg)
 
-:zzz: Wait for followings panels to be available:
+Wait for followings panels to be available:
 
 ![](guiScreenShots/wvc1.jpg)
 
