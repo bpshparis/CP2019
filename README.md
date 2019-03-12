@@ -61,7 +61,7 @@ A sample demo of the application with a mailbox analysis *may be* available [her
 -->
 
 ### Application Flow
-![Flow](images/mailbox.analyzer.flow.jpg)
+![Flow](images/appFlow.jpg)
 
 <br>
 
