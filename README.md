@@ -203,6 +203,8 @@ Then hit
 
 :thumbsup: this mean that the **Tone Analyzer** service as been successfully instantiate.
 
+
+<!--
 To be ready to use  **Tone Analyzer** instance need a new credential to be created. So click on **Service credentials** available on top left under the menu:
 
 ![](guiScreenShots/ta5.jpg)
@@ -218,7 +220,7 @@ Keep default setting
 and hit 
 
 ![](guiScreenShots/ta8.jpg)
-
+-->
 
 To instanciate **Natural Language Understanding** service, go back to [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai) and click
 
