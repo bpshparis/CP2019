@@ -354,7 +354,7 @@ It should display something like:
 ```	
 { "d85669d6-1e12-468c-b64e-2cc429e68142": { "credentials": [ { "id": "582d5c6f......
 ```	
-
+> :checkered_flag: You should now be ready to run the application.
 
 #### Run application
 
