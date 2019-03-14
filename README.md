@@ -53,6 +53,8 @@ Ctrl + Click on [IBM Cloud Catalog](https://console.bluemix.net/catalog/?categor
 
 #### Setup Tone Analyzer service
 
+![](res/ta50x.png) **Tone Analyzer** uses linguistic analysis to detect three types of tones from communications: emotion, social, and language.  This insight can then be used to drive high impact communications.
+
 To instanciate **Tone Analyzer** service click
 
 ![](guiScreenShots/ta0.jpg)
@@ -93,6 +95,8 @@ and hit
 
 #### Setup Natural Language Understanding service
 
+![](res/nlu50x.png) **Natural Language Understanding** analyze text to extract meta-data from content such as concepts, entities, emotion, relations, sentiment and more.
+
 To instanciate **Natural Language Understanding** service, go back to [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai) and click
 
 ![](guiScreenShots/nlu0.jpg)
@@ -114,6 +118,8 @@ Then hit
 :thumbsup: this mean that the **Natural Language Understanding** service as been successfully instantiate.
 
 #### Setup Visual Recognition service
+
+![](res/wvc50x.png) **Visual Recognition** find meaning in visual content! Analyze images for scenes, objects, faces, and other content. Choose a default model off the shelf, or create your own custom classifier. Develop smart applications that analyze the visual content of images or video frames to understand what is happening in a scene.
 
 To instanciate **Visual Recognition** service, go back to [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai) and click
 
@@ -151,18 +157,24 @@ You can check it in your [IBM Cloud Dashboard](https://console.bluemix.net/dashb
 * Download and install [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html)  
 * Download and install [curl](https://curl.haxx.se/windows/)
 * Download [jq](https://github.com/stedolan/jq/releases/download/jq-1.5/jq-win64.exe), rename it to **jq** and copy it in your %PATH%.
+* Download a [JDK](https://www.oracle.com/technetwork/java/javase/downloads/index.html) and install it.
+* Download [WAS Liberty Kernel](https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-kernel).
 
 ![](res/mac.png)
 
 * Download and install [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html)  
 * **curl** should already be installed. If not, get it from [here](https://curl.haxx.se/dlwiz/?type=bin&os=Mac+OS+X&flav=-&ver=-&cpu=i386)
 * Download [jq](https://github.com/stedolan/jq/releases/download/jq-1.5/jq-osx-amd64), rename it to **jq**, :warning: set its attribute to executable (e.g. **chmod +x**) and copy it in your $PATH.
+* Download [sponge](https://github.com/bpshparis/CP2019/blob/master/osxtools/sponge) :warning: set its attribute to executable (e.g. **chmod +x**) and copy it in your $PATH.
+* Download a [JDK](https://www.oracle.com/technetwork/java/javase/downloads/index.html) and install it.
+* Download [WAS Liberty Kernel](https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-kernel).
 
 ![](res/tux.png)
 
 * Download and install [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html)  
 * Get **curl** from your distribution repository or download and install it from [here](https://curl.haxx.se/dlwiz/?type=bin&os=Linux).
 * Get **jq** from your distribution repository or download it from [here](https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64), rename it to **jq**, :warning: set its attribute to executable (e.g. **chmod +x**) and copy it in your $PATH.
+* Install **moreutils** package
 * Download a [JDK](https://www.oracle.com/technetwork/java/javase/downloads/index.html) and install it.
 * Download [WAS Liberty Kernel](https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-kernel).
 <br>
