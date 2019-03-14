@@ -277,7 +277,7 @@ Let's connect:
 
 :bulb: If prompt to select a region, press enter to skip.
 
-:thumbsup: Now you should be logged to IBM Cloud.
+:checkered_flag: Now you should be logged to IBM Cloud.
 
 <br>
 
