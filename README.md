@@ -91,7 +91,8 @@ A sample demo of the application with a mailbox analysis *may be* available [her
 * Download and install [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html)  
 * Get **curl** from your distribution repository or download and install it from [here](https://curl.haxx.se/dlwiz/?type=bin&os=Linux).
 * Get **jq** from your distribution repository or download it from [here](https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64), rename it to **jq**, :warning: set its attribute to executable (e.g. **chmod +x**) and copy it in your $PATH.
-
+* Download a [JDK](https://www.oracle.com/technetwork/java/javase/downloads/index.html) and install it.
+* Download [WAS Liberty Kernel](https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-kernel).
 <br>
 
 #### Check everything is installed properly
@@ -178,6 +179,17 @@ Let's connect to :de:
 :thumbsup: Now you should be logged and ready to setup environment.
 
 <br>
+
+<!--
+Select a region (or press enter to skip):
+1. au-syd
+2. jp-tok
+3. eu-de
+4. eu-gb
+5. us-south
+6. us-east
+Enter a number> 
+-->
 
 ### Setup environment with IBM Cloud Graphical User Interface
 
@@ -411,7 +423,47 @@ Download code
 
 	curl -LO  https://github.com/bpshparis/ma/archive/master.zip
 
-Unzip it
+and unzip it.
+
+#### Install WAS Liberty Kernel
+
+	unzip wlp-kernel-19.0.0.2.zip
+	
+Create defaultServer
+
+	wlp/bin/server create
+	
+Replace wlp/usr/servers/defaultServer/server.xml with this section
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+
+    <!-- Enable features -->
+        <featureManager>
+            <feature>servlet-3.0</feature>
+        </featureManager>
+
+        <httpEndpoint host="*" httpPort="80" httpsPort="443" id="defaultHttpEndpoint"/>
+        <application id="app" location="app.war" name="app"/>
+
+</server>
+```
+then run
+
+	wlp/bin/installUtility install defaultServer
+
+to configure defaultServer.
+	
+#### Add application to defaultServer
+
+Create **wlp/usr/servers/defaultServer/apps/dma.war.xml** with the folloing content:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<archive>
+    <dir sourceOnDisk="${APP_CODE_PATH}/WebContent" targetInArchive="/"/>
+</archive>
+```
+:warning: Substitute ${APP_CODE_PATH} with the full path where you unzip application code earlier. 
 
 #### Prepare for application deployment
 
