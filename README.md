@@ -322,7 +322,7 @@ to configure defaultServer.
 	
 #### Add application to defaultServer
 
-Create **wlp/usr/servers/defaultServer/apps/dma.war.xml** with the following content:
+Create **wlp/usr/servers/defaultServer/apps/app.war.xml** with the following content:
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <archive>
