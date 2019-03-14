@@ -7,24 +7,21 @@ MailBox Analyzer is an application using [Watson Developer Cloud Java SDK](https
 ## Table of Contents
 
 - [Application Flow](#application-flow)
+
 - [Setup environment in IBM Cloud](#setup-environment-in-ibm-cloud)
   * [Setup Tone Analyzer service](#setup-tone-analyzer-service)
   * [Setup Natural Language Understanding service](#setup-natural-language-understanding-service)
   * [Setup Visual Recognition service](#setup-visual-recognition-service)  
-- [Prerequisite](#prerequisite)
+
+- [Setup application](#setup-application)
   * [Install needed softwares](#install-needed-softwares)
   * [Check everything is installed properly](#check-everything-is-installed-properly)
-  * [Check your IBM Cloud account](#check-your-ibm-cloud-account)
-  * [Add some environment variables and aliases](#add-some-environment-variables-and-aliases)
-- [Login to IBM Cloud](#login-to-ibm-cloud)
-
-
-  * [Check environment is setup correctly](#check-environment-is-setup-correctly)
-- [Setup application](#setup-application)
-  * [Get application code](#get-application-code)
-  * [Prepare for application deployment](#prepare-for-application-deployment)
-- [Deploy application](#deploy-application)
-- [Run application](#run-application)
+  * [Login to IBM Cloud](#login-to-ibm-cloud)  
+  * [Install WAS Liberty Kernel](#Install-was-liberty-kernel)
+  * [](#prepare-for-application-deployment)
+  * [Add application to defaultServer](#add-application-to-defaultserver)
+  * [Set environment to access Watson service instances in IBM Cloud](#set-environment-to-access-watson-service-instances-in-ibm-cloud)
+  * [Run application](#run-application)
 - [Send your own datas for analysis](#send-your-own-datas-for-analysis)
 - [Clean your room](#clean-your-room)
 - [About Watson Developer Cloud services being used in the application](#about-watson-developer-cloud-services-being-used-in-the-application)
@@ -144,9 +141,51 @@ Then hit
 > :checkered_flag: You are done with environment setup. Now at least three Watson services should be created.
 You can check it in your [IBM Cloud Dashboard](https://console.bluemix.net/dashboard/apps).
 
-### Prerequisite
-
 <br>
+
+
+
+<!--
+	ibmcloud catalog search tone
+	ibmcloud catalog service tone-analyzer
+	ibmcloud resource service-instance-create ta tone-analyzer lite eu-de
+	ibmcloud resource service-key-create taKey Manager --instance-name ta
+	export TA_APIKEY=$(ibmcloud resource service-key taKey | awk '/^\s*apikey:/ {print $2}') && echo $TA_APIKEY
+	export TA_URL=$(ibmcloud resource service-key taKey | awk '/^\s*url:/ {print $2}') && echo $TA_URL
+	export TA_METHOD=/v3/tone?version=2017-09-21 && echo $TA_METHOD
+	export TA_TEXT="On en a gros !" && echo $TA_TEXT
+	jq -n --arg value "$TA_TEXT" '{"text": $value}' | tee ta.req.json | jq .
+	curl -X POST -u 'apikey:'$TA_APIKEY -H 'Content-Type: application/json' -H 'Content-Language: fr' -H 'Accept-Language: fr' -d @ta0.req.json $TA_URL$TA_METHOD | tee ta.resp.json | jq .
+-->
+
+<!--
+	ibmcloud catalog search understanding
+	ibmcloud catalog service natural-language-understanding
+	ibmcloud resource service-instance-create nlu natural-language-understanding free eu-de	
+	ibmcloud resource service-key-create nluKey Manager --instance-name nlu
+	export NLU_APIKEY=$(ibmcloud resource service-key nluKey | awk '/^\s*apikey:/ {print $2}') && echo $NLU_APIKEY
+	export NLU_URL=$(ibmcloud resource service-key nluKey | awk '/^\s*url:/ {print $2}') && echo $NLU_URL
+	export NLU_METHOD=/v1/analyze?version=2018-11-16 && echo $NLU_METHOD
+	export NLU_FEATURES='{"sentiment": {}, "keywords": {}, "entities": {}}' && echo "$NLU_FEATURES" | jq .
+	export NLU_TEXT="J'aimerai avoir des nouvelles de ma commande passée il y a déjà 15 jours et que je n'ai toujours pas reçu." && echo $NLU_TEXT
+	jq -n --argjson features "$NLU_FEATURES" --arg text "$NLU_TEXT" '{"text": $text, "features": $features}' | tee nlu.req.json | jq .
+	curl -X POST -u 'apikey:'$NLU_APIKEY -H 'Content-Type: application/json' -d @nlu.req.json $NLU_URL$NLU_METHOD | tee nlu.resp.json | jq .
+-->
+
+<!--
+	ibmcloud catalog search vision
+	ibmcloud catalog service watson-vision-combined
+	ibmcloud resource service-instance-create wvc watson-vision-combined lite us-south	
+	ibmcloud resource service-key-create wvcKey Manager --instance-name wvc
+	export WVC_APIKEY=$(ibmcloud resource service-key wvcKey | awk '/^\s*apikey:/ {print $2}') && echo $WVC_APIKEY
+	export WVC_URL=$(ibmcloud resource service-key wvcKey | awk '/^\s*url:/ {print $2}') && echo $WVC_URL
+	export WVC_METHOD=/v3/classify?version=2018-03-19 && echo $WVC_METHOD
+	export IMG=$(readlink -f image1.jpg) && echo $IMG
+	curl -X POST -u 'apikey:'$WVC_APIKEY -H 'Accept-Language: fr' -F 'images_file=@'$IMG $WVC_URL$WVC_METHOD | tee wvc.resp.json | jq .
+-->
+
+	
+### Setup application
 
 #### Install needed softwares
 
@@ -165,9 +204,9 @@ You can check it in your [IBM Cloud Dashboard](https://console.bluemix.net/dashb
 * Download and install [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html)  
 * **curl** should already be installed. If not, get it from [here](https://curl.haxx.se/dlwiz/?type=bin&os=Mac+OS+X&flav=-&ver=-&cpu=i386)
 * Download [jq](https://github.com/stedolan/jq/releases/download/jq-1.5/jq-osx-amd64), rename it to **jq**, :warning: set its attribute to executable (e.g. **chmod +x**) and copy it in your $PATH.
-* Download [sponge](https://github.com/bpshparis/CP2019/blob/master/osxtools/sponge) :warning: set its attribute to executable (e.g. **chmod +x**) and copy it in your $PATH.
 * Download a [JDK](https://www.oracle.com/technetwork/java/javase/downloads/index.html) and install it.
 * Download [WAS Liberty Kernel](https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-kernel).
+* Download [sponge](https://github.com/bpshparis/CP2019/blob/master/osxtools/sponge) :warning: set its attribute to executable (e.g. **chmod +x**) and copy it in your $PATH.
 
 ![](res/tux.png)
 
@@ -197,24 +236,23 @@ Check jq command is available:
 
 	jq
 
+Check javac command is available:
+
+	javac
+
 <br>
 
-### Login to IBM Cloud
+#### Login to IBM Cloud
 
 :bulb: To avoid being prompt when using ibmcloud command set the following config parameters
 
 	ibmcloud config --check-version false
 	ibmcloud config --usage-stats-collect false
 
-Let's connect to :de:
+Let's connect:
+:warning: Substitute ${IC_ID} with your IBM Cloud id
 
-![](res/mac.png) ![](res/tux.png) ![](res/term.png) 
-
-	iclde	
-	
-![](res/win.png) ![](res/cmd.png)
-
-	%iclde%	
+	ibmcloud login -u ${IC_ID} --skip-ssl-validation
 
 > :no_entry: If **login failed** because of logging in with a federated ID, then browse one of the following url:
 
@@ -228,193 +266,21 @@ Let's connect to :de:
 
 > Then login with **--sso**,
 
-![](res/mac.png) ![](res/tux.png) ![](res/term.png) 
+:warning: Substitute ${IC_ID} with your IBM Cloud id
 
-	iclsso
-	
-![](res/win.png) ![](res/cmd.png)
-
-	%iclsso%	
-	
+	ibmcloud login -u ${IC_ID} --sso
+		
 > paste the one-time passcode when prompt
 
 	One Time Code (Get one at https://login.eu-gb.bluemix.net/UAALoginServerWAR/passcode)>
 	
 > and hit enter.
 
-> Then create an API key called apikey0 and save it in apikey0 file in current directory
-	
-	ibmcloud iam api-key-create apikey0 -d "apikey0" --file apikey0
+:bulb: If prompt to select a region, press enter to skip.
 
-> Now login with your API key stored in apikey0 file in current directory
-
-	ibmcloud login target --apikey @apikey0
-	
-> and target :de: endpoint
-
-![](res/mac.png) ![](res/tux.png) ![](res/term.png) 
-
-	ibmcloud target --cf-api ${DE_ENDPOINT} -o $ORG -s $SPACE
-	
-![](res/win.png) ![](res/cmd.png)	
-
-	ibmcloud target --cf-api %DE_ENDPOINT% -o %ORG% -s %SPACE%
-
-:thumbsup: Now you should be logged and ready to setup environment.
+:thumbsup: Now you should be logged to IBM Cloud.
 
 <br>
-
-<!--
-Select a region (or press enter to skip):
-1. au-syd
-2. jp-tok
-3. eu-de
-4. eu-gb
-5. us-south
-6. us-east
-Enter a number> 
--->
-
-
-
-### Setup environment with command line
-
-#### Dump marketplace to get service name, plan and description
-
-:zzz: It may take a minute to display 
-
-![](res/mac.png) ![](res/tux.png) ![](res/term.png) 
-
-	ibmcloud service offerings | tee marketplace
-
-![](res/win.png) ![](res/cmd.png)	
-
-	ibmcloud service offerings > marketplace
-
-<br>
-
-#### Setup Tone Analyzer service
-
-![](res/ta50x.png) **Tone Analyzer** uses linguistic analysis to detect three types of tones from communications: emotion, social, and language.  This insight can then be used to drive high impact communications.
-
-##### Get name and plan for Tone Analyzer service
-
-<!--
-	ibmcloud catalog search tone
-	ibmcloud catalog service tone-analyzer
-	ibmcloud resource service-instance-create ta tone-analyzer lite eu-de
-	ibmcloud resource service-key-create taKey Manager --instance-name ta
-	export TA_APIKEY=$(ibmcloud resource service-key taKey | awk '/^\s*apikey:/ {print $2}') && echo $TA_APIKEY
-	export TA_URL=$(ibmcloud resource service-key taKey | awk '/^\s*url:/ {print $2}') && echo $TA_URL
-	export TA_METHOD=/v3/tone?version=2017-09-21 && echo $TA_METHOD
-	export TA_TEXT="On en a gros !" && echo $TA_TEXT
-	jq -n --arg value "$TA_TEXT" '{"text": $value}' | tee ta.req.json | jq .
-	curl -X POST -u 'apikey:'$TA_APIKEY -H 'Content-Type: application/json' -H 'Content-Language: fr' -H 'Accept-Language: fr' -d @ta0.req.json $TA_URL$TA_METHOD | tee ta.resp.json | jq .
--->
-
-![](res/mac.png) ![](res/tux.png) ![](res/term.png) 
-
-	grep -i tone marketplace
-	
-![](res/win.png) ![](res/cmd.png)
-
-	find /I "tone" marketplace
-
-##### Create Tone Analyzer service
-	ibmcloud service create tone_analyzer lite ta0
-
-##### Create service key for Tone Analyzer service
-	ibmcloud service key-create ta0 user0
-
-<br>
-
-#### Setup Natural Language Understanding
-
-![](res/nlu50x.png) **Natural Language Understanding** analyze text to extract meta-data from content such as concepts, entities, emotion, relations, sentiment and more.
-
-##### Get name and plan for Natural Language Understanding service
-
-<!--
-	ibmcloud catalog search understanding
-	ibmcloud catalog service natural-language-understanding
-	ibmcloud resource service-instance-create nlu natural-language-understanding free eu-de	
-	ibmcloud resource service-key-create nluKey Manager --instance-name nlu
-	export NLU_APIKEY=$(ibmcloud resource service-key nluKey | awk '/^\s*apikey:/ {print $2}') && echo $NLU_APIKEY
-	export NLU_URL=$(ibmcloud resource service-key nluKey | awk '/^\s*url:/ {print $2}') && echo $NLU_URL
-	export NLU_METHOD=/v1/analyze?version=2018-11-16 && echo $NLU_METHOD
-	export NLU_FEATURES='{"sentiment": {}, "keywords": {}, "entities": {}}' && echo "$NLU_FEATURES" | jq .
-	export NLU_TEXT="J'aimerai avoir des nouvelles de ma commande passée il y a déjà 15 jours et que je n'ai toujours pas reçu." && echo $NLU_TEXT
-	jq -n --argjson features "$NLU_FEATURES" --arg text "$NLU_TEXT" '{"text": $text, "features": $features}' | tee nlu.req.json | jq .
-	curl -X POST -u 'apikey:'$NLU_APIKEY -H 'Content-Type: application/json' -d @nlu.req.json $NLU_URL$NLU_METHOD | tee nlu.resp.json | jq .
--->
-
-
-![](res/mac.png) ![](res/tux.png) ![](res/term.png) 
-
-	grep -i language marketplace
-
-![](res/win.png) ![](res/cmd.png)
-
-	find /I "language" marketplace
-
-##### Create Natural Language Understanding service
-	ibmcloud service create natural-language-understanding free nlu0
-
-##### Create service key for Natural Language Understanding service
-	ibmcloud service key-create nlu0 user0
-
-<br>
-
-#### Create Visual Recognition service
-
-![](res/wvc50x.png) **Visual Recognition** find meaning in visual content! Analyze images for scenes, objects, faces, and other content. Choose a default model off the shelf, or create your own custom classifier. Develop smart applications that analyze the visual content of images or video frames to understand what is happening in a scene.
-
-##### Get name and plan for Visual Recognition service
-
-<!--
-	ibmcloud catalog search vision
-	ibmcloud catalog service watson-vision-combined
-	ibmcloud resource service-instance-create wvc watson-vision-combined lite us-south	
-	ibmcloud resource service-key-create wvcKey Manager --instance-name wvc
-	export WVC_APIKEY=$(ibmcloud resource service-key wvcKey | awk '/^\s*apikey:/ {print $2}') && echo $WVC_APIKEY
-	export WVC_URL=$(ibmcloud resource service-key wvcKey | awk '/^\s*url:/ {print $2}') && echo $WVC_URL
-	export WVC_METHOD=/v3/classify?version=2018-03-19 && echo $WVC_METHOD
-	export IMG=$(readlink -f image1.jpg) && echo $IMG
-	curl -X POST -u 'apikey:'$WVC_APIKEY -H 'Accept-Language: fr' -F 'images_file=@'$IMG $WVC_URL$WVC_METHOD | tee wvc.resp.json | jq .
--->
-
-![](res/mac.png) ![](res/tux.png) ![](res/term.png)
-
-	grep -i visual marketplace
-	
-![](res/win.png) ![](res/cmd.png)
-
-	find /I "visual" marketplace
-	
-
-##### Create Visual Recognition service
-
-	ibmcloud resource service-instance-create wvc0 watson-vision-combined lite us-south	
-	
-	ibmcloud  resource service-alias-create wvc0 --instance-name wvc0
-
-##### Create service key for Visual Recognition service
-
-	ibmcloud service key-create wvc0 user0
-
-<br>
-
-#### Check environment is setup correctly
-
-> :checkered_flag: You are done with environment setup. Now at least four Watson services should be created (**ta, nlu, and wvc**) in your space.
-
->Check it with
-
-	ibmcloud resource service-instances
-
-<br>
-	
-### Setup application
 
 #### Get application code
 
@@ -472,15 +338,34 @@ Change to code directory
 
 	cd CP2019-master
 
-> Now if you stand in the correct directory, you should be able to list files such as **resources.sh** and **resourcesAG.sh**.
+> Now if you stand in the correct directory, you should be able to list files such as **resourcesAG.sh**. We're going to run **resourcesAG.sh** to get credentials for our 3 service instances from IBM Cloud and store then in a **json formatted system environment variable**.
 
+	./resourcesAG.sh
+
+This command should generate a file called **resourcesAG.json** that we're going to store in a environment variable called **VCAP_SERVICES** with the following command:
+
+	export VCAP_SERVICES=$(cat resourcesAG.json)
+	
+:bulb: Check the variable with:	
+
+	echo $VCAP_SERVICES	
+	
+It should display something like:
+
+```	
+{ "d85669d6-1e12-468c-b64e-2cc429e68142": { "credentials": [ { "id": "582d5c6f......
+```	
 
 
 #### Run application
 
-start WAS Liberty Kernel defaultServer
+Come back in your home directory
 
-	wlp//bin/server start defaultServer
+	cd..
+
+and start WAS Liberty Kernel defaultServer
+
+	wlp/bin/server start defaultServer
 
 ![](res/web.png)
 Then browse [app](http://localhost:9080/app)

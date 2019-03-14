@@ -102,10 +102,6 @@ jq . $output
 echo ""
 echo "!!!! Resources available in " $output " !!!!"
 
-export VCAP_SERVICES=$(cat $output)
-echo "VCAP_SERVICES="$VCAP_SERVICES
-
-
 # Sample usage:
 # jq -r '.[] | select(.instance=="Visual Recognition-cv" and .credentials[1].role=="Writer") | .credentials[1].apikey + ":" + .credentials[1].role' $output
 
