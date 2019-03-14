@@ -179,7 +179,8 @@ You can check it in your [IBM Cloud Dashboard](https://console.bluemix.net/dashb
 * Download and install [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/ibmcloud/download_cli.html)  
 * Get **curl** from your distribution repository or download and install it from [here](https://curl.haxx.se/dlwiz/?type=bin&os=Linux).
 * Get **jq** from your distribution repository or download it from [here](https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64), rename it to **jq**, :warning: set its attribute to executable (e.g. **chmod +x**) and copy it in your $PATH.
-
+* Download a [JDK](https://www.oracle.com/technetwork/java/javase/downloads/index.html) and install it.
+* Download [WAS Liberty Kernel](https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-kernel).
 <br>
 
 #### Check everything is installed properly
@@ -267,6 +268,106 @@ Let's connect to :de:
 
 <br>
 
+<<<<<<< HEAD
+=======
+<!--
+Select a region (or press enter to skip):
+1. au-syd
+2. jp-tok
+3. eu-de
+4. eu-gb
+5. us-south
+6. us-east
+Enter a number> 
+-->
+
+### Setup environment with IBM Cloud Graphical User Interface
+
+![](res/web.png)
+
+Ctrl + Click on [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai)
+
+To instanciate **Tone Analyzer** service click
+
+![](guiScreenShots/ta0.jpg)
+
+Wait for followings panels to be available:
+
+![](guiScreenShots/ta1.jpg)
+
+![](guiScreenShots/ta2.jpg)
+
+Then hit 
+
+![](guiScreenShots/ta3.jpg)
+
+:zzz: When you land on,
+
+![](guiScreenShots/ta4.jpg)
+
+:thumbsup: this mean that the **Tone Analyzer** service as been successfully instantiate.
+
+<!--
+To be ready to use  **Tone Analyzer** instance need a new credential to be created. So click on **Service credentials** available on top left under the menu:
+
+![](guiScreenShots/ta5.jpg)
+
+Then click
+
+![](guiScreenShots/ta6.jpg)
+
+Keep default setting
+
+![](guiScreenShots/ta7.jpg)
+
+and hit 
+
+![](guiScreenShots/ta8.jpg)
+-->
+
+To instanciate **Natural Language Understanding** service, go back to [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai) and click
+
+![](guiScreenShots/nlu0.jpg)
+
+Wait for followings panels to be available:
+
+![](guiScreenShots/nlu1.jpg)
+
+![](guiScreenShots/nlu2.jpg)
+
+Then hit 
+
+![](guiScreenShots/nlu3.jpg)
+
+:zzz: When you land on,
+
+![](guiScreenShots/ta4.jpg)
+
+:thumbsup: this mean that the **Natural Language Understanding** service as been successfully instantiate.
+
+To instanciate **Visual Recognition** service, go back to [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai) and click
+
+![](guiScreenShots/wvc0.jpg)
+
+Wait for followings panels to be available:
+
+![](guiScreenShots/wvc1.jpg)
+
+![](guiScreenShots/wvc2.jpg)
+
+Then hit 
+
+![](guiScreenShots/wvc3.jpg)
+
+:zzz: When you land on,
+
+![](guiScreenShots/wvc4.jpg)
+
+:thumbsup: this mean that the **Visual Recognition** service as been successfully instantiate.
+
+> :checkered_flag: You are done with environment setup. Now at least three Watson services should be created.
+You can check it in your [IBM Cloud Dashboard](https://console.bluemix.net/dashboard/apps).
+>>>>>>> 6ad1b8ff123b582a63b724fe5e60f1152f5aab00
 
 ### Setup environment with command line
 
@@ -413,7 +514,47 @@ Download code
 
 	curl -LO  https://github.com/bpshparis/ma/archive/master.zip
 
-Unzip it
+and unzip it.
+
+#### Install WAS Liberty Kernel
+
+	unzip wlp-kernel-19.0.0.2.zip
+	
+Create defaultServer
+
+	wlp/bin/server create
+	
+Replace wlp/usr/servers/defaultServer/server.xml with this section
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+
+    <!-- Enable features -->
+        <featureManager>
+            <feature>servlet-3.0</feature>
+        </featureManager>
+
+        <httpEndpoint host="*" httpPort="80" httpsPort="443" id="defaultHttpEndpoint"/>
+        <application id="app" location="app.war" name="app"/>
+
+</server>
+```
+then run
+
+	wlp/bin/installUtility install defaultServer
+
+to configure defaultServer.
+	
+#### Add application to defaultServer
+
+Create **wlp/usr/servers/defaultServer/apps/dma.war.xml** with the folloing content:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<archive>
+    <dir sourceOnDisk="${APP_CODE_PATH}/WebContent" targetInArchive="/"/>
+</archive>
+```
+:warning: Substitute ${APP_CODE_PATH} with the full path where you unzip application code earlier. 
 
 #### Prepare for application deployment
 
