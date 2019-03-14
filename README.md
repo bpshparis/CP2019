@@ -433,7 +433,7 @@ Create defaultServer
 
 	wlp/bin/server create
 	
-Replace wlp/usr/servers/defaultServer/server.xml with this section
+Replace **wlp/usr/servers/defaultServer/server.xml** with this section
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <server description="new server">
@@ -443,7 +443,7 @@ Replace wlp/usr/servers/defaultServer/server.xml with this section
             <feature>servlet-3.0</feature>
         </featureManager>
 
-        <httpEndpoint host="*" httpPort="80" httpsPort="443" id="defaultHttpEndpoint"/>
+        <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
         <application id="app" location="app.war" name="app"/>
 
 </server>
@@ -456,7 +456,7 @@ to configure defaultServer.
 	
 #### Add application to defaultServer
 
-Create **wlp/usr/servers/defaultServer/apps/dma.war.xml** with the folloing content:
+Create **wlp/usr/servers/defaultServer/apps/dma.war.xml** with the following content:
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <archive>

@@ -61,5 +61,19 @@
     "service": "watson-vision-combined",
     "region": "us-south",
     "instance": "Visual Recognition-tg"
+  },
+  "6e580736-0567-424f-9c2e-f4c528f167b4": {
+    "credentials": [
+      {
+        "id": "0fb2cd17-cdbb-4e1a-8818-fd4497b36074",
+        "name": "Auto-generated service credentials",
+        "apikey": "zWuheZpQcpGk4v9natLBEDBafyheeGjcOZHSiUdjyDbM",
+        "url": "https://stream.watsonplatform.net/speech-to-text/api",
+        "role": "Manager"
+      }
+    ],
+    "service": "speech-to-text",
+    "region": "us-south",
+    "instance": "Speech to Text-oz"
   }
 }
