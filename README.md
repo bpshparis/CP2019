@@ -10,13 +10,13 @@ MailBox Analyzer is an application using [Watson Developer Cloud Java SDK](https
 - [Overview of the application](#overview-of-the-application)
 -->
 - [Application Flow](#application-flow)
+- [Setup environment with IBM Cloud Graphical User Interface](#setup-environment-with-ibm-cloud-graphical-user-interface)
 - [Prerequisite](#prerequisite)
   * [Install needed softwares](#install-needed-softwares)
   * [Check everything is installed properly](#check-everything-is-installed-properly)
   * [Check your IBM Cloud account](#check-your-ibm-cloud-account)
   * [Add some environment variables and aliases](#add-some-environment-variables-and-aliases)
 - [Login to IBM Cloud](#login-to-ibm-cloud)
-- [Setup environment with IBM Cloud Graphical User Interface](#setup-environment-with-ibm-cloud-graphical-user-interface)
 - [Setup environment with command line](#setup-environment-with-command-line)
   * [Dump marketplace to get service name plan and description](#dump-marketplace-to-get-service-name-plan-and-description)
   * [Setup Tone Analyzer service](#setup-tone-analyzer-service)
@@ -65,6 +65,94 @@ A sample demo of the application with a mailbox analysis *may be* available [her
 ![Flow](images/appFlow.jpg)
 
 <br>
+
+### Setup environment with IBM Cloud Graphical User Interface
+
+![](res/web.png)
+
+Ctrl + Click on [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai)
+
+To instanciate **Tone Analyzer** service click
+
+![](guiScreenShots/ta0.jpg)
+
+Wait for followings panels to be available:
+
+![](guiScreenShots/ta1.jpg)
+
+![](guiScreenShots/ta2.jpg)
+
+Then hit 
+
+![](guiScreenShots/ta3.jpg)
+
+:zzz: When you land on,
+
+![](guiScreenShots/ta4.jpg)
+
+:thumbsup: this mean that the **Tone Analyzer** service as been successfully instantiate.
+
+<!--
+To be ready to use  **Tone Analyzer** instance need a new credential to be created. So click on **Service credentials** available on top left under the menu:
+
+![](guiScreenShots/ta5.jpg)
+
+Then click
+
+![](guiScreenShots/ta6.jpg)
+
+Keep default setting
+
+![](guiScreenShots/ta7.jpg)
+
+and hit 
+
+![](guiScreenShots/ta8.jpg)
+-->
+
+To instanciate **Natural Language Understanding** service, go back to [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai) and click
+
+![](guiScreenShots/nlu0.jpg)
+
+Wait for followings panels to be available:
+
+![](guiScreenShots/nlu1.jpg)
+
+![](guiScreenShots/nlu2.jpg)
+
+Then hit 
+
+![](guiScreenShots/nlu3.jpg)
+
+:zzz: When you land on,
+
+![](guiScreenShots/ta4.jpg)
+
+:thumbsup: this mean that the **Natural Language Understanding** service as been successfully instantiate.
+
+To instanciate **Visual Recognition** service, go back to [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai) and click
+
+![](guiScreenShots/wvc0.jpg)
+
+Wait for followings panels to be available:
+
+![](guiScreenShots/wvc1.jpg)
+
+![](guiScreenShots/wvc2.jpg)
+
+Then hit 
+
+![](guiScreenShots/wvc3.jpg)
+
+:zzz: When you land on,
+
+![](guiScreenShots/wvc4.jpg)
+
+:thumbsup: this mean that the **Visual Recognition** service as been successfully instantiate.
+
+> :checkered_flag: You are done with environment setup. Now at least three Watson services should be created.
+You can check it in your [IBM Cloud Dashboard](https://console.bluemix.net/dashboard/apps).
+
 
 ### Prerequisite
 
@@ -180,6 +268,8 @@ Let's connect to :de:
 
 <br>
 
+<<<<<<< HEAD
+=======
 <!--
 Select a region (or press enter to skip):
 1. au-syd
@@ -277,6 +367,7 @@ Then hit
 
 > :checkered_flag: You are done with environment setup. Now at least three Watson services should be created.
 You can check it in your [IBM Cloud Dashboard](https://console.bluemix.net/dashboard/apps).
+>>>>>>> 6ad1b8ff123b582a63b724fe5e60f1152f5aab00
 
 ### Setup environment with command line
 
