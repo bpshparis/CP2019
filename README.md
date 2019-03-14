@@ -10,13 +10,13 @@ MailBox Analyzer is an application using [Watson Developer Cloud Java SDK](https
 - [Overview of the application](#overview-of-the-application)
 -->
 - [Application Flow](#application-flow)
-- [Setup environment with IBM Cloud Graphical User Interface](#setup-environment-with-ibm-cloud-graphical-user-interface)
 - [Prerequisite](#prerequisite)
   * [Install needed softwares](#install-needed-softwares)
   * [Check everything is installed properly](#check-everything-is-installed-properly)
   * [Check your IBM Cloud account](#check-your-ibm-cloud-account)
   * [Add some environment variables and aliases](#add-some-environment-variables-and-aliases)
 - [Login to IBM Cloud](#login-to-ibm-cloud)
+- [Setup environment with IBM Cloud Graphical User Interface](#setup-environment-with-ibm-cloud-graphical-user-interface)
 - [Setup environment with command line](#setup-environment-with-command-line)
   * [Dump marketplace to get service name plan and description](#dump-marketplace-to-get-service-name-plan-and-description)
   * [Setup Tone Analyzer service](#setup-tone-analyzer-service)
@@ -65,94 +65,6 @@ A sample demo of the application with a mailbox analysis *may be* available [her
 ![Flow](images/appFlow.jpg)
 
 <br>
-
-### Setup environment with IBM Cloud Graphical User Interface
-
-![](res/web.png)
-
-Ctrl + Click on [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai)
-
-To instanciate **Tone Analyzer** service click
-
-![](guiScreenShots/ta0.jpg)
-
-Wait for followings panels to be available:
-
-![](guiScreenShots/ta1.jpg)
-
-![](guiScreenShots/ta2.jpg)
-
-Then hit 
-
-![](guiScreenShots/ta3.jpg)
-
-:zzz: When you land on,
-
-![](guiScreenShots/ta4.jpg)
-
-:thumbsup: this mean that the **Tone Analyzer** service as been successfully instantiate.
-
-<!--
-To be ready to use  **Tone Analyzer** instance need a new credential to be created. So click on **Service credentials** available on top left under the menu:
-
-![](guiScreenShots/ta5.jpg)
-
-Then click
-
-![](guiScreenShots/ta6.jpg)
-
-Keep default setting
-
-![](guiScreenShots/ta7.jpg)
-
-and hit 
-
-![](guiScreenShots/ta8.jpg)
--->
-
-To instanciate **Natural Language Understanding** service, go back to [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai) and click
-
-![](guiScreenShots/nlu0.jpg)
-
-Wait for followings panels to be available:
-
-![](guiScreenShots/nlu1.jpg)
-
-![](guiScreenShots/nlu2.jpg)
-
-Then hit 
-
-![](guiScreenShots/nlu3.jpg)
-
-:zzz: When you land on,
-
-![](guiScreenShots/ta4.jpg)
-
-:thumbsup: this mean that the **Natural Language Understanding** service as been successfully instantiate.
-
-To instanciate **Visual Recognition** service, go back to [IBM Cloud Catalog](https://console.bluemix.net/catalog/?category=ai) and click
-
-![](guiScreenShots/wvc0.jpg)
-
-Wait for followings panels to be available:
-
-![](guiScreenShots/wvc1.jpg)
-
-![](guiScreenShots/wvc2.jpg)
-
-Then hit 
-
-![](guiScreenShots/wvc3.jpg)
-
-:zzz: When you land on,
-
-![](guiScreenShots/wvc4.jpg)
-
-:thumbsup: this mean that the **Visual Recognition** service as been successfully instantiate.
-
-> :checkered_flag: You are done with environment setup. Now at least three Watson services should be created.
-You can check it in your [IBM Cloud Dashboard](https://console.bluemix.net/dashboard/apps).
-
 
 ### Prerequisite
 
@@ -268,8 +180,6 @@ Let's connect to :de:
 
 <br>
 
-<<<<<<< HEAD
-=======
 <!--
 Select a region (or press enter to skip):
 1. au-syd
@@ -367,7 +277,6 @@ Then hit
 
 > :checkered_flag: You are done with environment setup. Now at least three Watson services should be created.
 You can check it in your [IBM Cloud Dashboard](https://console.bluemix.net/dashboard/apps).
->>>>>>> 6ad1b8ff123b582a63b724fe5e60f1152f5aab00
 
 ### Setup environment with command line
 
@@ -512,9 +421,11 @@ You can check it in your [IBM Cloud Dashboard](https://console.bluemix.net/dashb
 
 Download code
 
-	curl -LO  https://github.com/bpshparis/ma/archive/master.zip
+	curl -LO  https://github.com/bpshparis/cp2019/archive/master.zip
 
-and unzip it.
+and unzip it:
+
+	unzip master.zip
 
 #### Install WAS Liberty Kernel
 
@@ -556,104 +467,30 @@ Create **wlp/usr/servers/defaultServer/apps/dma.war.xml** with the following con
 ```
 :warning: Substitute ${APP_CODE_PATH} with the full path where you unzip application code earlier. 
 
-#### Prepare for application deployment
+#### Set environment to access Watson service instances in IBM Cloud
 
 Change to code directory
 
-	cd ma-master
+	cd CP2019-master
 
-> Now if you stand in the correct directory, you should be able to list directory such as **WebContent** and file such as **manifest.yml**.
-
->Before deploying the application you need to choose **3** things:
-
-> :warning: **Don't use special characters. Use [a-z],[A-Z],[0-9] and [-] only.**
-> * A **host** (must be unique in domain) for your application (e.g.: **mylastname-mycompagny**)
-> * A **name** (must be unique in your space) for your application (e.g.: **myapp0**)
-> * A **domain** (must be available in your space)  for your application (e.g.: **eu-de.mybluemix.net**)
-
-:bulb: find domains available in your space with the following command
-
-	ibmcloud app domains
-
-![](res/notepad.png)
-
-Edit the **manifest.yml** and update it accordingly by substituting **mylastname-mycompagny**, **myapp0** and **eu-de.mybluemix.net** if needed:
-```
-applications:
-# WARNING: Only hyphen (e.g. -) are supported in hostname. Don't add any dot.
-# host must be unique in domain
-- host: mylastname-mycompagny
-  disk: 256M
-  #name must be unique in your space
-  name: myapp0
-  path: ./WebContent
-  #domain must be available in your space
-  domain: eu-de.mybluemix.net
-  mem: 256M
-  instances: 1
-  services:
-  - ta0
-  - nlu0
-  - dsc0
-  - wvc0
-```
-
-<br>
-
-### Deploy application
-
-> :warning: For deployment to work you need to push your code from the same directory as **manifest.yml**.
-
-:checkered_flag: Now you are ready to deploy the application :
-
-	ibmcloud app push
-
-Once staging has completed you should be able to run the application *on your own IBM Cloud environment*.
-
-```
-...
-0 of 1 instances running, 1 starting
-1 of 1 instances running
-
-App started
+> Now if you stand in the correct directory, you should be able to list files such as **resources.sh** and **resourcesAG.sh**.
 
 
-OK
 
-App app0 was started using this command `.liberty/initial_startup.rb`
+#### Run application
 
-Showing health and status for app app0 in org teatcher0@bpshparis.com / space dev as teatcher0@bpshparis.com...
-OK
+start WAS Liberty Kernel defaultServer
 
-requested state: started
-instances: 1/1
-usage: 1G x 1 instances
-urls: ma-bpshparis.eu-de.mybluemix.net
-last uploaded: Wed Oct 3 23:05:17 UTC 2018
-stack: cflinuxfs2
-buildpack: Liberty for Java(TM) (WAR, liberty-18.0.0_3, buildpack-v3.25-20180918-1034, ibmjdk-1.8.0_20180830, env)
+	wlp//bin/server start defaultServer
 
-     state     since                    cpu      memory        disk           details
-#0   running   2018-10-03 11:07:38 PM   112.4%   96.6M of 1G   223.5M of 1G
-```
+![](res/web.png)
+Then browse [app](http://localhost:9080/app)
 
-<br>
-
-### Run application
-
-Display your application state :
-
-	ibmcloud app list
-	
-Copy urls columns content. It should be something like **mylastname-mycompagny.eu-de.mybluemix.net**.
-
-Paste it in a new tab of your web browser and check application is running
-
-Click on ![](res/envelope.png) to upload sample attached documents in Discovery Collection and get sample mails.
+When app is loaded, click on ![](res/envelope.png) to upload sample attached documents in Discovery Collection and get sample mails.
 
 Once mails are displayed, click ![](res/cogwheels.png) to send sample mails for analysis.
 
-When Watson returned, **4 new tabs** (one per service) should appear and are ready to browse. 
+When Watson returned, **3 new tabs** (one per service) should appear and are ready to browse. 
 
 ![](res/watsontabs.png)
 
