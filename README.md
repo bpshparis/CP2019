@@ -255,7 +255,7 @@ Check javac command is available:
 Let's connect:
 :warning: Substitute ${IC_ID} with your IBM Cloud id
 
-	ibmcloud login -u ${IC_ID} --skip-ssl-validation
+	ibmcloud login -u ${IC_ID} --skip-ssl-validation --no-region
 
 > :no_entry: If **login failed** because of logging in with a federated ID, then browse one of the following url:
 
@@ -271,7 +271,7 @@ Let's connect:
 
 :warning: Substitute ${IC_ID} with your IBM Cloud id
 
-	ibmcloud login -u ${IC_ID} --sso
+	ibmcloud login -u ${IC_ID} --sso --no-region
 		
 > paste the one-time passcode when prompt
 
@@ -341,9 +341,57 @@ Change to code directory
 
 	cd CP2019-master
 
-> Now if you stand in the correct directory, you should be able to list files such as **resourcesAG.sh**. We're going to run **resourcesAG.sh** to get credentials for our 3 service instances from IBM Cloud and store then in a **json formatted system environment variable**.
+> Now if you stand in the correct directory, you should be able to list files such as **resourcesAG.sh**. We're going to run **resourcesAG.sh** to get credentials for our 3 service instances from IBM Cloud and store them in a **json formatted system environment variable**.
 
 	./resourcesAG.sh
+	
+	
+```
+{
+	"b75d0d61-360f-42f3-baa5-953c936110ac": {
+	    "credentials": [
+	      {
+		"id": "2f8a81c0-8eaf-4913-9983-58de02398f2a",
+		"name": "Auto-generated service credentials",
+		"apikey": "4Pe0RUDXt_1EBsrWk60PxbrxY7u-Zc1dRcbD_8n6jQet",
+		"url": "https://gateway.watsonplatform.net/tone-analyzer/api",
+		"role": "Manager"
+	      }
+	    ],
+	    "service": "tone-analyzer",
+	    "region": "us-south",
+	    "instance": "Tone Analyzer-fs"
+	  },
+	  "771408bb-d479-409d-90cf-762bac34bd47": {
+	    "credentials": [
+	      {
+		"id": "3a194377-2ec8-4a5e-b6a8-a57c551af48b",
+		"name": "Auto-generated service credentials",
+		"apikey": "210l8T-InTbjpyFG7BUoonNTGjVRAgdFUsyPXPfITNnk",
+		"url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+		"role": "Manager"
+	      }
+	    ],
+	    "service": "natural-language-understanding",
+	    "region": "us-south",
+	    "instance": "Natural Language Understanding-qf"
+	  },
+	  "40d26948-5fc4-4a59-828e-e44d211cce3e": {
+	    "credentials": [
+	      {
+		"id": "e8357b44-ca94-403f-9e6d-bc0b5b44af26",
+		"name": "Auto-generated service credentials",
+		"apikey": "M6WC_MW-SRs_sppmIk0yIkiYLwCPF-JwardYBjzpn5Oh",
+		"url": "https://gateway.watsonplatform.net/visual-recognition/api",
+		"role": "Manager"
+	      }
+	    ],
+	    "service": "watson-vision-combined",
+	    "region": "us-south",
+	    "instance": "Visual Recognition-gd"
+	  }
+  }
+```
 
 This command should generate a file called **resourcesAG.json** that we're going to store in a environment variable called **VCAP_SERVICES** with the following command:
 
